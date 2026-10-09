@@ -1,0 +1,61 @@
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <limits>
+using namespace std;
+
+// Function 1: Get valid height and weight
+void getMeasurements(double& height, double& weight) {
+    cout << "Enter height in metres: ";
+    while (!(cin >> height) || height <= 0) {
+        cout << "Invalid height. Enter a positive number: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    cout << "Enter weight in kg: ";
+    while (!(cin >> weight) || weight <= 0) {
+        cout << "Invalid weight. Enter a positive number: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
+
+// Function 2: Calculate and return BMI
+double calculateBMI(double height, double weight) {
+    return weight / (height * height);
+}
+
+// Function 3: Return the BMI category
+string classifyBMI(double bmi) {
+    if (bmi < 18.5)
+        return "underweight";
+    else if (bmi < 25.0)
+        return "healthy weight";
+    else if (bmi < 30.0)
+        return "overweight";
+    else
+        return "obese";
+}
+
+int main() {
+    char again = 'y';
+
+    while (again == 'y' || again == 'Y') {
+        double height, weight;
+
+        getMeasurements(height, weight);
+        double bmi = calculateBMI(height, weight);
+
+        cout << fixed << setprecision(1);
+        cout << "Your BMI is: " << bmi << endl;
+        cout << "Category: " << classifyBMI(bmi) << endl;
+
+        cout << "\nCalculate again? (y/n): ";
+        cin >> again;
+    }
+
+    cout << "Thank you for using the BMI calculator.\n";
+    return 0;
+}
